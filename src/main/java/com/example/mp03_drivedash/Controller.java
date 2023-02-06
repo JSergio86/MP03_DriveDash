@@ -19,7 +19,6 @@ public class Controller extends Application {
         juego.start(stage);
     }
 
-
     @Override
     public void start(Stage stage) throws Exception {
 

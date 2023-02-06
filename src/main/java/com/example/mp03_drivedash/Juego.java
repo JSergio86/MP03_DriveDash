@@ -2,21 +2,18 @@ package com.example.mp03_drivedash;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Juego extends Application {
      Coche jugador;
@@ -33,17 +30,35 @@ public class Juego extends Application {
         Canvas canvas = new Canvas(550, 900);
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.drawImage(new Image("fondo2.png"),0,0);
+        //gc.drawImage(new Image("background1.png"),0,0);
 
-        Button button = new Button();
-        button.setText("Hola");
+        final double[] y = {0};
+        double velocity = -2;
+        Image background1 = new Image("background1.png");
+        Image background2 = new Image("background2.png");
 
+        AnimationTimer timer3 = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                gc.clearRect(0, 0, 550, 900);
+                gc.drawImage(background1,0 , y[0]);
+                gc.drawImage(background2,0, y[0] + 900);
+                y[0] += velocity;
+                if (y[0] <= -900) {
+                    y[0] = 0;
+                }
+            }
+        };
+        timer3.start();
+        stage.show();
 
-        jugador = new Coche(150, 600, 7, new Image("car2.png"));
+        jugador = new Coche(150, 600, 20, new Image("coche_amarillo.png"));
         root.getChildren().add(jugador.getImageView());
 
         obstacles = new ArrayList<>();
 
+        String[] imagenes = {"coche_azul.png", "coche_naranja.png", "coche_poli.png","coche_rosa.png","coche_turquesa.png","coche_gris.png","coche_verde.png","camion_morado.png","camion_rojo.png", "camioneta_blanca.png"};
+        Random random = new Random();
         for (int i = 0; i < 15; i++) {
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -52,15 +67,20 @@ public class Juego extends Application {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            Obstaculo obstaculo = new Obstaculo(new Image("car2.png"),1);
+                            int randomIndex = random.nextInt(imagenes.length);
+                            String randomImageName = imagenes[randomIndex];
+                            Image image = new Image(randomImageName);
+                            Obstaculo obstaculo = new Obstaculo(image, 1);
+                            if (obstaculo.getImageView().getX() < 275) {
+                                obstaculo.getImageView().setRotate(180);
+                            }
                             root.getChildren().add(obstaculo.getImageView());
                             obstacles.add(obstaculo);
                         }
                     });
                 }
-            }, i * 1000);
+            }, i * 1500);
         }
-
 
         timer = new AnimationTimer() {
             @Override
@@ -69,14 +89,12 @@ public class Juego extends Application {
                     obstaculo.move();
                     if (jugador.getImageView().getBoundsInParent().intersects(obstaculo.getImageView().getBoundsInParent())) {
                         timer.stop();
-                        System.out.println("Se ha chocado");
+                        gameOver(stage);
                     }
                 }
             }
         };
         timer.start();
-
-
 
 
         scene.setOnKeyPressed(e -> {
@@ -98,6 +116,15 @@ public class Juego extends Application {
 
         stage.setScene(scene);
         stage.show();
+    }
+    public void gameOver(Stage stage) {
+        try {
+            Pane root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+            Scene gameOverScene = new Scene(root);
+            stage.setScene(gameOverScene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

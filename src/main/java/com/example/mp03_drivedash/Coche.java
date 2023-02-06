@@ -51,22 +51,22 @@ public class Coche {
     }
 
     public void moverArriba() {
-        yPos -= velocidad;
+        yPos = Math.max(yPos - velocidad, 0);
         imageView.setY(yPos);
     }
 
     public void moverAbajo() {
-        yPos += velocidad;
+        yPos = Math.min(yPos + velocidad, 900 - imageView.getBoundsInLocal().getHeight());
         imageView.setY(yPos);
     }
 
     public void moverIzquierda() {
-        xPos -= velocidad;
+        xPos = Math.max(xPos - velocidad, 0);
         imageView.setX(xPos);
     }
 
     public void moverDerecha() {
-        xPos += velocidad;
+        xPos = Math.min(xPos + velocidad, 550 - imageView.getBoundsInLocal().getWidth());
         imageView.setX(xPos);
     }
 }
