@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Game extends Application {
-     Vehicle jugador;
-     List<Obstacle> obstacles;
+public class Juego extends Application {
+     Coche jugador;
+     List<Obstaculo> obstacles;
      AnimationTimer timer;
 
     @Override
@@ -34,12 +34,12 @@ public class Game extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(new Image("fondo2.png"),0,0);
 
-        jugador = new Vehicle(150, 150, 5, new Image("car2.png"));
+        jugador = new Coche(150, 150, 5, new Image("car2.png"));
         root.getChildren().add(jugador.getImageView());
 
         obstacles = new ArrayList<>();
 
-        for (int i = 0; i < 999; i++) {
+        for (int i = 0; i < 15; i++) {
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -47,9 +47,9 @@ public class Game extends Application {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            Obstacle obstacle = new Obstacle(new Image("car2.png"),1);
-                            root.getChildren().add(obstacle.getImageView());
-                            obstacles.add(obstacle);
+                            Obstaculo obstaculo = new Obstaculo(new Image("car2.png"),1);
+                            root.getChildren().add(obstaculo.getImageView());
+                            obstacles.add(obstaculo);
                         }
                     });
                 }
@@ -60,8 +60,8 @@ public class Game extends Application {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                for (Obstacle obstacle : obstacles) {
-                    obstacle.move();
+                for (Obstaculo obstaculo : obstacles) {
+                    obstaculo.move();
                 }
             }
         };

@@ -13,13 +13,13 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Vehicle {
+public class Coche {
      double xPos;
      double yPos;
      double velocidad;
      ImageView imageView;
 
-    public Vehicle(double x, double y, double velocidad, Image image) {
+    public Coche(double x, double y, double velocidad, Image image) {
         xPos = x;
         yPos = y;
         this.velocidad = velocidad;
