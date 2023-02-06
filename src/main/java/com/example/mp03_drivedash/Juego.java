@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -23,18 +24,22 @@ public class Juego extends Application {
      AnimationTimer timer;
 
     @Override
-    public void start(Stage primaryStage) throws InterruptedException {
+    public void start(Stage stage) throws InterruptedException {
         Group root = new Group();
         Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
+        stage.setScene(scene);
+        stage.setResizable(false);
 
-        Canvas canvas = new Canvas(580, 1000);
+        Canvas canvas = new Canvas(550, 900);
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(new Image("fondo2.png"),0,0);
 
-        jugador = new Coche(150, 150, 5, new Image("car2.png"));
+        Button button = new Button();
+        button.setText("Hola");
+
+
+        jugador = new Coche(150, 600, 7, new Image("car2.png"));
         root.getChildren().add(jugador.getImageView());
 
         obstacles = new ArrayList<>();
@@ -62,10 +67,15 @@ public class Juego extends Application {
             public void handle(long now) {
                 for (Obstaculo obstaculo : obstacles) {
                     obstaculo.move();
+                    if (jugador.getImageView().getBoundsInParent().intersects(obstaculo.getImageView().getBoundsInParent())) {
+                        timer.stop();
+                        System.out.println("Se ha chocado");
+                    }
                 }
             }
         };
         timer.start();
+
 
 
 
@@ -86,8 +96,8 @@ public class Juego extends Application {
             }
         });
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
