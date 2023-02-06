@@ -14,10 +14,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Vehicle {
-    private double xPos;
-    private double yPos;
-    private double velocidad;
-    private ImageView imageView;
+     double xPos;
+     double yPos;
+     double velocidad;
+     ImageView imageView;
 
     public Vehicle(double x, double y, double velocidad, Image image) {
         xPos = x;
@@ -50,22 +50,22 @@ public class Vehicle {
         imageView.setY(yPos);
     }
 
-    public void moveUp() {
+    public void moverArriba() {
         yPos -= velocidad;
         imageView.setY(yPos);
     }
 
-    public void moveDown() {
+    public void moverAbajo() {
         yPos += velocidad;
         imageView.setY(yPos);
     }
 
-    public void moveLeft() {
+    public void moverIzquierda() {
         xPos -= velocidad;
         imageView.setX(xPos);
     }
 
-    public void moveRight() {
+    public void moverDerecha() {
         xPos += velocidad;
         imageView.setX(xPos);
     }
