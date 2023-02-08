@@ -3,6 +3,7 @@ package com.example.mp03_drivedash;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -13,12 +14,19 @@ import javafx.stage.Stage;
 
 import javafx.animation.AnimationTimer;
 
+import java.net.URL;
 import java.util.*;
 
-public class Juego extends Application {
+public class Juego extends Application implements Initializable {
      Coche jugador;
      List<Obstaculo> obstacles;
      AnimationTimer timer;
+     int dificultad = 1500;
+     int numCoches=15;
+     int obstaculosEsquivados = 0;
+     boolean comenzarJuego = false;
+
+
 
     @Override
     public void start(Stage stage) throws InterruptedException {
@@ -59,7 +67,8 @@ public class Juego extends Application {
 
         String[] imagenes = {"coche_azul.png", "coche_naranja.png", "coche_poli.png","coche_rosa.png","coche_turquesa.png","coche_gris.png","coche_verde.png","camion_morado.png","camion_rojo.png", "camioneta_blanca.png"};
         Random random = new Random();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < numCoches; i++) {
+
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -76,25 +85,42 @@ public class Juego extends Application {
                             }
                             root.getChildren().add(obstaculo.getImageView());
                             obstacles.add(obstaculo);
+                          /*  if(obstacles.size()==numCoches){
+                                comenzarJuego=true;
+                            }
+
+                           */
                         }
                     });
                 }
-            }, i * 1500);
+            }, i * dificultad);
         }
 
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                for (Obstaculo obstaculo : obstacles) {
-                    obstaculo.move();
-                    if (jugador.getImageView().getBoundsInParent().intersects(obstaculo.getImageView().getBoundsInParent())) {
-                        timer.stop();
-                        gameOver(stage);
+        //if(comenzarJuego) {
+            timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    for (int i = 0; i < obstacles.size(); i++) {
+                        Obstaculo obstaculo = obstacles.get(i);
+                        obstaculo.move();
+                        if (jugador.getImageView().getBoundsInParent().intersects(obstaculo.getImageView().getBoundsInParent())) {
+                            timer.stop();
+                            System.out.println(obstaculo.puntuacion);
+                            gameOver(stage);
+                            obstaculo.puntuacion = 1500;
+                            break;
+                        } else {
+                            obstaculosEsquivados++;
+                        }
+                        if (obstaculosEsquivados == numCoches) {
+                            System.out.println("Has subido de nivel");
+                        }
                     }
                 }
-            }
-        };
-        timer.start();
+
+            };
+            timer.start();
+        //}
 
 
         scene.setOnKeyPressed(e -> {
@@ -129,6 +155,11 @@ public class Juego extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }
 
