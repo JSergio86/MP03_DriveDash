@@ -31,7 +31,7 @@ public class Obstaculo {
     public void move() {
         y += velocidad;
         imageView.setY(y);
-        puntuacion+=20;
+        puntuacion+=1;
 
     }
 }

@@ -16,6 +16,7 @@ import javafx.animation.AnimationTimer;
 
 import java.net.URL;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Juego extends Application implements Initializable {
      Coche jugador;
@@ -25,6 +26,7 @@ public class Juego extends Application implements Initializable {
      int numCoches=15;
      int obstaculosEsquivados = 0;
      boolean comenzarJuego = false;
+     int cochesPasando;
 
 
 
@@ -38,7 +40,6 @@ public class Juego extends Application implements Initializable {
         Canvas canvas = new Canvas(550, 900);
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        //gc.drawImage(new Image("background1.png"),0,0);
 
         final double[] y = {0};
         double velocity = -2;
@@ -85,42 +86,44 @@ public class Juego extends Application implements Initializable {
                             }
                             root.getChildren().add(obstaculo.getImageView());
                             obstacles.add(obstaculo);
-                          /*  if(obstacles.size()==numCoches){
-                                comenzarJuego=true;
-                            }
-
-                           */
+                            cochesPasando++;
                         }
                     });
                 }
             }, i * dificultad);
         }
 
-        //if(comenzarJuego) {
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    for (int i = 0; i < obstacles.size(); i++) {
-                        Obstaculo obstaculo = obstacles.get(i);
-                        obstaculo.move();
-                        if (jugador.getImageView().getBoundsInParent().intersects(obstaculo.getImageView().getBoundsInParent())) {
-                            timer.stop();
-                            System.out.println(obstaculo.puntuacion);
-                            gameOver(stage);
-                            obstaculo.puntuacion = 1500;
-                            break;
-                        } else {
-                            obstaculosEsquivados++;
-                        }
-                        if (obstaculosEsquivados == numCoches) {
-                            System.out.println("Has subido de nivel");
-                        }
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                for (int i = 0; i < obstacles.size(); i++) {
+                    Obstaculo obstaculo = obstacles.get(i);
+                    obstaculo.move();
+                    if (jugador.getImageView().getBoundsInParent().intersects(obstaculo.getImageView().getBoundsInParent())) {
+                        timer.stop();
+                        System.out.println(obstaculo.puntuacion);
+                        gameOver(stage);
+                        obstaculo.puntuacion = 1500;
+                        break;
                     }
-                }
 
-            };
-            timer.start();
-        //}
+                    if(obstaculo.y==1000){
+                        root.getChildren().remove(obstaculo.getImageView());
+                        obstacles.remove(i);
+                    }
+
+                    if(obstacles.size()==0){
+                        timer.stop();
+                        System.out.println("Has subido de level");
+
+                    }
+
+                }
+            }
+
+        };
+        timer.start();
+
 
 
         scene.setOnKeyPressed(e -> {
