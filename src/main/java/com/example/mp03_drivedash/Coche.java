@@ -61,12 +61,12 @@ public class Coche {
     }
 
     public void moverIzquierda() {
-        xPos = Math.max(xPos - velocidad, 0);
+        xPos = Math.max(xPos - velocidad, 90);
         imageView.setX(xPos);
     }
 
     public void moverDerecha() {
-        xPos = Math.min(xPos + velocidad, 550 - imageView.getBoundsInLocal().getWidth());
+        xPos = Math.min(xPos + velocidad, 550 - imageView.getBoundsInLocal().getWidth() -85);
         imageView.setX(xPos);
     }
 }

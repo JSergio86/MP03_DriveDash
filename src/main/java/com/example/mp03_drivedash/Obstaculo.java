@@ -20,6 +20,10 @@ public class Obstaculo {
 
     }
 
+    public Obstaculo() {
+
+    }
+
     public ImageView getImageView() {
         return imageView;
     }
