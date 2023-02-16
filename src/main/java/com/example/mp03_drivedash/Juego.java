@@ -5,6 +5,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -18,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javafx.animation.AnimationTimer;
@@ -38,7 +40,6 @@ public class Juego extends Application{
      int puntuacion=0;
      int nivelActual=1;
      int velocidadObstaculos= 1;
-
 
 
     @Override
@@ -76,28 +77,7 @@ public class Juego extends Application{
         };
         animationTimer.start();
         stage.show();
-/*
-        final double[] y = {0};
-        double velocity = -2;
-        Image background1 = new Image("background1.png");
-        Image background2 = new Image("background2.png");
 
-        AnimationTimer timer3 = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                gc.clearRect(0, 0, 550, 900);
-                gc.drawImage(background1,0 , y[0]);
-                gc.drawImage(background2,0, y[0] + 900);
-                y[0] += velocity;
-                if (y[0] <= -900) {
-                    y[0] = 0;
-                }
-            }
-        };
-        timer3.start();
-        stage.show();
-
- */
 
         jugador = new Coche(250, 700, 30, new Image("coche_amarillo.png"));
         root.getChildren().add(jugador.getImageView());
@@ -146,7 +126,6 @@ public class Juego extends Application{
                 new KeyFrame(Duration.seconds(3), new KeyValue(levelLabel.opacityProperty(), 0))
         );
 
-
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -157,12 +136,12 @@ public class Juego extends Application{
                     if (jugador.getImageView().getBoundsInParent().intersects(obstaculo.getImageView().getBoundsInParent())) {
                         timer.stop();
                         //System.out.println(puntuacion);
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("¡Has chocado!");
-                        alert.setHeaderText("Puntuación obtenida: " + puntuacion);
-                        alert.setContentText("¡Inténtalo de nuevo!");
-                        alert.show();
-                        gameOver(stage);
+                        stage.close();
+                        try {
+                            gameOver(puntuacion);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         break;
                     }
                     if(obstaculo.y>1000){
@@ -212,8 +191,6 @@ public class Juego extends Application{
         timer.start();
 
 
-
-
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case UP:
@@ -236,23 +213,19 @@ public class Juego extends Application{
     }
 
 
-    public void gameOver(Stage stage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("gameover.fxml"));
-            Parent root = null;
-            try {
-                root = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public void gameOver(int puntuacion) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("gameover.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
 
-            stage.setTitle("Menu");
-            stage.setScene(new Scene(root));
-            stage.show();
+        // Obtener la referencia al Text nPuntos
+        Text puntuacionText = (Text) loader.getNamespace().get("puntuacionText");
+        // Asignar el valor de nPuntos al Text nPuntos
+        puntuacionText.setText(Integer.toString(puntuacion));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        stage.show();
     }
 
 
