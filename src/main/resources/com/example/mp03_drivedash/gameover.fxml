@@ -14,15 +14,10 @@
                 <Image url="@gameover.png" />
             </image>
         </ImageView>
-      <Text fx:id="puntuacionText" fill="WHITE" layoutX="273.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+      <Text fx:id="puntuacionText" fill="WHITE" layoutX="198.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="puntuacion: 5353" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font></Text>
-      <Text fx:id="puntuacionText1" fill="WHITE" layoutX="167.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Puntuacion: ">
-         <font>
-            <Font name="DejaVu Sans Bold" size="15.0" />
-         </font>
-      </Text>
       <Button layoutX="177.0" layoutY="258.0" mnemonicParsing="false" onAction="#clickComenzar" text="Click para volver a jugar" />
     </children>
 </AnchorPane>

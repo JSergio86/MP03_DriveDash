@@ -115,7 +115,7 @@ public class Juego extends Application{
 
         Label levelLabel = new Label();
         levelLabel.setAlignment(Pos.CENTER);
-        levelLabel.setStyle("-fx-background-color: #000; -fx-text-fill: #fff; -fx-padding: 10px; -fx-font-size: 24px;");
+        levelLabel.setStyle("-fx-background-color: transparent; -fx-text-fill: #ffff00; -fx-padding: 10px; -fx-font-size: 32px; -fx-font-weight: bold;");
         levelLabel.setOpacity(0);
         root.getChildren().add(levelLabel);
 
@@ -150,7 +150,7 @@ public class Juego extends Application{
                     }
 
                     if(obstacles.size()==0){
-                        levelLabel.setText("Nivel " + (nivelActual+1));
+                        levelLabel.setText("\n\n\n\n                   Nivel " + (nivelActual+1));
                         timeline.playFromStart();
                         //System.out.println("Has subido de nivel");
                         nivelActual++;
@@ -223,9 +223,10 @@ public class Juego extends Application{
         // Obtener la referencia al Text nPuntos
         Text puntuacionText = (Text) loader.getNamespace().get("puntuacionText");
         // Asignar el valor de nPuntos al Text nPuntos
-        puntuacionText.setText(Integer.toString(puntuacion));
+        puntuacionText.setText("Puntuación: "+puntuacion);
 
         stage.show();
+        stage.toFront();
     }
 
 
