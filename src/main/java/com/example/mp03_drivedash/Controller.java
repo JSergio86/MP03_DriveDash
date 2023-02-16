@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 public class Controller extends Application {
     Stage stage;
     Juego juego;
-    Obstaculo obstaculo = new Obstaculo();
     int puntuacion;
 
     @FXML
@@ -25,7 +24,6 @@ public class Controller extends Application {
         stage = new Stage();
         juego = new Juego();
         juego.start(stage);
-        puntuacion = obstaculo.puntuacion;
 
     }
 

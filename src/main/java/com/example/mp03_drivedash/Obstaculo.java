@@ -8,7 +8,6 @@ public class Obstaculo {
     int y;
     double velocidad;
     ImageView imageView;
-    int puntuacion=0;
 
     public Obstaculo(Image image,double velocidad) {
         this.x = (int) (Math.random() * 315 + 80);
@@ -20,8 +19,8 @@ public class Obstaculo {
 
     }
 
-    public Obstaculo() {
-
+    public int getY() {
+        return y;
     }
 
     public ImageView getImageView() {
@@ -32,10 +31,9 @@ public class Obstaculo {
         return x;
     }
 
-    public void move() {
+    public void mover() {
         y += velocidad;
         imageView.setY(y);
-        puntuacion+=1;
 
     }
 }
