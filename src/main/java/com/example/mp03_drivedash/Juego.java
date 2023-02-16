@@ -156,7 +156,7 @@ public class Juego extends Application{
                     obstaculo.mover();
                     if (jugador.getImageView().getBoundsInParent().intersects(obstaculo.getImageView().getBoundsInParent())) {
                         timer.stop();
-                        System.out.println(puntuacion);
+                        //System.out.println(puntuacion);
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("¡Has chocado!");
                         alert.setHeaderText("Puntuación obtenida: " + puntuacion);
@@ -173,7 +173,7 @@ public class Juego extends Application{
                     if(obstacles.size()==0){
                         levelLabel.setText("Nivel " + (nivelActual+1));
                         timeline.playFromStart();
-                        System.out.println("Has subido de level");
+                        //System.out.println("Has subido de nivel");
                         nivelActual++;
                         numCoches+=5;
                         dificultad-=200;
