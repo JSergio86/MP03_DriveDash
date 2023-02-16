@@ -34,12 +34,10 @@ public class Juego extends Application{
      AnimationTimer timer;
      int dificultad = 1500;
      int numCoches=15;
-     int obstaculosEsquivados = 0;
-     boolean comenzarJuego = false;
      int cochesPasando;
      int puntuacion=0;
      int nivelActual=1;
-     int velocidadObstaculos=2;
+     int velocidadObstaculos= 1;
 
 
 
@@ -64,8 +62,8 @@ public class Juego extends Application{
             @Override
             public void handle(long now) {
                 gc.clearRect(0, 0, 550, 900);
-                posY1[0] += 5;
-                posY2[0] += 5;
+                posY1[0] += 2.5;
+                posY2[0] += 2.5;
                 gc.drawImage(carretera1, 0, posY1[0]);
                 gc.drawImage(carretera2, 0, posY2[0]);
                 if (posY1[0] >= 900) {
@@ -101,7 +99,7 @@ public class Juego extends Application{
 
  */
 
-        jugador = new Coche(250, 700, 20, new Image("coche_amarillo.png"));
+        jugador = new Coche(250, 700, 30, new Image("coche_amarillo.png"));
         root.getChildren().add(jugador.getImageView());
 
         obstacles = new ArrayList<>();
@@ -165,13 +163,9 @@ public class Juego extends Application{
                         alert.setContentText("¡Inténtalo de nuevo!");
                         alert.show();
                         gameOver(stage);
-                        numCoches=15;
-                        dificultad=1500;
-                        nivelActual=1;
-                        velocidadObstaculos=1;
                         break;
                     }
-                    if(obstaculo.y==1000){
+                    if(obstaculo.y>1000){
                         root.getChildren().remove(obstaculo.getImageView());
                         obstacles.remove(i);
                     }
@@ -183,8 +177,7 @@ public class Juego extends Application{
                         nivelActual++;
                         numCoches+=5;
                         dificultad-=200;
-                        velocidadObstaculos+=2;
-                        if (nivelActual <= 3) {
+                        velocidadObstaculos++;
                             for (int j = 0; j < numCoches; j++) {
                                 Timer timer = new Timer();
                                 timer.schedule(new TimerTask() {
@@ -209,7 +202,7 @@ public class Juego extends Application{
                                 }, j * dificultad);
                             }
 
-                        }
+
 
                     }
                 }
