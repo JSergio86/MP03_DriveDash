@@ -14,11 +14,11 @@
                 <Image url="@gameover.png" />
             </image>
         </ImageView>
-      <Text fx:id="puntuacionText" fill="WHITE" layoutX="198.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="puntuacion: 5353" textAlignment="CENTER">
+      <Text fx:id="puntuacionText" fill="WHITE" layoutX="191.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="puntuacion: 5353" textAlignment="CENTER">
          <font>
-            <Font size="15.0" />
+            <Font size="19.0" />
          </font></Text>
-      <Button layoutX="175.0" layoutY="254.0" mnemonicParsing="false" onAction="#clickComenzar" text="Click para volver a jugar">
+      <Button layoutX="208.0" layoutY="253.0" mnemonicParsing="false" onAction="#clickComenzar" text="Volver a jugar">
          <font>
             <Font size="15.0" />
          </font></Button>
