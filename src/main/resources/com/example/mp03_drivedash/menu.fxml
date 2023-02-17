@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp03_drivedash.Controller">
     <children>
-        <ImageView fx:id="imageview" fitHeight="714.0" fitWidth="1000.0" layoutX="87.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fx:id="imageview" fitHeight="714.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.4000244140625" AnchorPane.topAnchor="0.0">
             <image>
                 <Image url="@fondo.png" />
             </image>
@@ -19,7 +19,7 @@
                 <Font name="FreeMono" size="36.0" />
             </font>
         </Label>
-      <Button layoutX="374.0" layoutY="488.0" mnemonicParsing="false" onAction="#clickComenzar" stylesheets="@boton.css" text="Comenzar Juego">
+      <Button layoutX="374.0" layoutY="488.0" mnemonicParsing="false" onAction="#clickComenzar" style="-fx-background-color: black;" stylesheets="@boton.css" text="Comenzar Juego" textFill="#e41717">
          <font>
             <Font name="DejaVu Sans Bold" size="24.0" />
          </font>
